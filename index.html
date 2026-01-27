@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: ['"Space Mono"', 'monospace'],
+            },
+            colors: {
+              retro: {
+                bg: '#ffffff',        // White background
+                surface: '#f4f4f5',   // Very light gray surface
+                border: '#000000',    // Solid black borders
+                accent: '#000000',    // Black accent
+                text: '#171717',      // Almost black text
+                muted: '#525252',     // Dark gray muted text
+                inverted: '#ffffff',  // White (for text on black buttons)
+              }
+            },
+            animation: {
+              'spin-slow': 'spin 12s linear infinite',
+              'zoom-in': 'zoomIn 1.5s ease-in-out forwards',
+            },
+            keyframes: {
+              zoomIn: {
+                '0%': { transform: 'scale(1)' },
+                '100%': { transform: 'scale(5)', opacity: '0' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #ffffff;
+        color: #171717;
+        font-family: 'Space Mono', monospace;
+        overflow-x: hidden;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #e5e5e5;
+        border-left: 1px solid #000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #000; 
+        border: 1px solid #fff;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #333;
+      }
+
+      /* Retro Effects - Light Mode Scanlines */
+      .scanlines {
+        background: linear-gradient(
+          to bottom,
+          rgba(0,0,0,0),
+          rgba(0,0,0,0) 50%,
+          rgba(0,0,0,0.05) 50%,
+          rgba(0,0,0,0.05)
+        );
+        background-size: 100% 4px;
+      }
+
+      @keyframes scan {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(100vh); }
+      }
+      
+      .scan-bar {
+        animation: scan 8s linear infinite;
+        background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.05), transparent);
+      }
+
+      @keyframes glitch-skew {
+        0% { transform: skew(0deg); }
+        20% { transform: skew(-20deg); }
+        40% { transform: skew(20deg); }
+        60% { transform: skew(-5deg); }
+        80% { transform: skew(5deg); }
+        100% { transform: skew(0deg); }
+      }
+
+      .hover-glitch:hover {
+        animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        /* Red and Blue shift for light mode glitch */
+        text-shadow: 2px 0px #ff0000, -2px 0px #0000ff;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
