@@ -18,7 +18,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
     ]
   },
   socialLinks: [
-    { platform: "GitHub", url: "https://github.com/xDaBix/", iconName: "Github" },
+    { platform: "GitHub", url: "https://github.com/Manan-Narang-01/", iconName: "Github" },
     { platform: "LinkedIn", url: "http://www.linkedin.com/in/manan-narang0106", iconName: "Linkedin" },
     { platform: "Email", url: "mailto:manannarang27@gmail.com", iconName: "Mail" }
   ],
@@ -62,7 +62,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       title: "Thread App",
       description: "Developed a Thread clone app in Swift for iOS, implementing real-time messaging, user authentication, and seamless UI/UX design.",
       technologies: ["Swift", "iOS", "Real-time Messaging", "Auth"],
-      link: "https://github.com/xDaBix/Thread-App",
+      link: "https://github.com/Manan-Narang-01/Thread-App",
       featured: true
     },
     {
@@ -70,7 +70,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       title: "Immersive Homes",
       description: "An AR/VR based software for building and previewing infrastructure at an early stage. Raised Rs. 2 lakhs funding at SSIP Ideahunt 2024.",
       technologies: ["AR/VR", "MongoDB", "C#"],
-      link: "https://github.com/xDaBix/Immersive-Homes",
+      link: "https://github.com/Manan-Narang-01/Immersive-Homes",
       featured: true
     },
     {
@@ -78,7 +78,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       title: "SteamHub",
       description: "A Django-based platform that allows players to buy and download games seamlessly.",
       technologies: ["Django", "Python", "Web Development"],
-      link: "https://github.com/xDaBix/SteamHub",
+      link: "https://github.com/Manan-Narang-01/SteamHub",
       featured: true
     },
     {
@@ -86,7 +86,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       title: "Unisex Salon System",
       description: "A user-friendly salon booking platform enabling customers to schedule appointments with preferred stylists.",
       technologies: ["ASP.NET", "SQL Server", "C#"],
-      link: "https://github.com/xDaBix/Salon-management-system",
+      link: "https://github.com/Manan-Narang-01/Salon-management-system",
       featured: false
     },
     {
@@ -94,7 +94,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       title: "Face Recognition",
       description: "Developed a face recognition system using the RetinaFace model for accurate face detection from a single reference image.",
       technologies: ["Python", "RetinaFace", "ML"],
-      link: "https://github.com/xDaBix/Face-Recognition",
+      link: "https://github.com/Manan-Narang-01/Face-Recognition",
       featured: false
     },
     {
@@ -102,7 +102,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       title: "Data Cleaning",
       description: "Worked on an important data cleaning process using MySQL Workbench on a company’s layoffs dataset.",
       technologies: ["MySQL", "Data Analysis"],
-      link: "https://github.com/xDaBix/Data-Cleaning",
+      link: "https://github.com/Manan-Narang-01/Data-Cleaning",
       featured: false
     }
   ],
