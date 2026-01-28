@@ -35,7 +35,7 @@ const App: React.FC = () => {
     
     const formData = new FormData(e.currentTarget);
     const formEndpoint = `https://formsubmit.co/ajax/f93fd4d20f092b35d6c4fc69e3bbfe51`;
-
+    
     try {
       const response = await fetch(formEndpoint, {
         method: "POST",
