@@ -35,7 +35,7 @@ export interface Certification {
 export interface SocialLink {
   platform: string;
   url: string;
-  iconName: string; // Mapping to Lucide icon names
+  iconName: string;
 }
 
 export interface PortfolioData {
@@ -55,10 +55,12 @@ export interface PortfolioData {
   certifications: Certification[];
 }
 
-export enum SectionType {
-  HOME = 'HOME',
-  EXPERIENCE = 'EXPERIENCE',
-  PROJECTS = 'PROJECTS',
-  EDUCATION = 'EDUCATION',
-  CONTACT = 'CONTACT'
-}
+export const SectionType = {
+  HOME: 'HOME',
+  EXPERIENCE: 'EXPERIENCE',
+  PROJECTS: 'PROJECTS',
+  EDUCATION: 'EDUCATION',
+  CONTACT: 'CONTACT'
+} as const;
+
+export type SectionType = typeof SectionType[keyof typeof SectionType];
