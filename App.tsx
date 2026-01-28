@@ -34,8 +34,8 @@ const App: React.FC = () => {
     setIsSubmitting(true);
     
     const formData = new FormData(e.currentTarget);
-    const formEndpoint = `https://formsubmit.co/ajax/f93fd4d20f092b35d6c4fc69e3bbfe51`;
-    
+    const formEndpoint = `https://formsubmit.co/ajax/${data.personalInfo.email}`;
+
     try {
       const response = await fetch(formEndpoint, {
         method: "POST",
@@ -184,7 +184,7 @@ const App: React.FC = () => {
             <p className="text-sm text-gray-600 mb-6 flex-grow font-medium">
               {proj.description}
             </p>
-            <div className="space-y-4">
+            <div className="mt-auto space-y-4">
               <div className="flex flex-wrap gap-2">
                 {proj.technologies.map(tech => (
                   <span key={tech} className="text-[10px] uppercase font-bold px-2 py-1 bg-gray-100 border border-gray-300 text-gray-800">
@@ -192,7 +192,7 @@ const App: React.FC = () => {
                   </span>
                 ))}
               </div>
-              <a href={proj.link} target="_blank" rel="noreferrer">
+              <a href={proj.link} target="_blank" rel="noreferrer" className="block">
                 <RetroButton variant="secondary" className="w-full text-sm py-2">
                   View Source
                 </RetroButton>
