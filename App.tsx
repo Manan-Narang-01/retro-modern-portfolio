@@ -141,7 +141,7 @@ const App: React.FC = () => {
               <h3 className="text-xl font-bold text-black group-hover:underline decoration-2 transition-colors">
                 {proj.title}
               </h3>
-              <a href={proj.link} className="text-gray-400 hover:text-black transition-colors">
+              <a href={proj.link} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-black transition-colors">
                 <ExternalLink size={20} />
               </a>
             </div>
@@ -156,9 +156,11 @@ const App: React.FC = () => {
                   </span>
                 ))}
               </div>
-              <RetroButton variant="secondary" className="w-full text-sm py-2">
-                View Source
-              </RetroButton>
+              <a href={proj.link} target="_blank" rel="noreferrer">
+                <RetroButton variant="secondary" className="w-full text-sm py-2">
+                  View Source
+                </RetroButton>
+              </a>
             </div>
           </RetroCard>
         ))}
@@ -229,13 +231,23 @@ const App: React.FC = () => {
           Transmitting data to: <span className="text-black font-bold bg-gray-200 px-1">{data.personalInfo.email}</span>
         </p>
 
-        <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); alert('Transmission simulated.'); }}>
+        {/* Integration with FormSubmit.co */}
+        <form 
+          className="space-y-6" 
+          action={`https://formsubmit.co/${data.personalInfo.email}`} 
+          method="POST"
+        >
+          {/* FormSubmit Configuration */}
+          <input type="hidden" name="_subject" value={`New Portfolio Message from ${data.personalInfo.name}`} />
+          <input type="hidden" name="_template" value="table" />
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label htmlFor="name" className="text-xs font-bold uppercase text-gray-500">User_ID</label>
               <input 
                 type="text" 
                 id="name"
+                name="name"
                 className="w-full bg-gray-50 border-2 border-gray-300 p-3 text-black focus:outline-none focus:border-black focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder-gray-400"
                 placeholder="Name"
                 required
@@ -246,6 +258,7 @@ const App: React.FC = () => {
               <input 
                 type="email" 
                 id="email"
+                name="email"
                 className="w-full bg-gray-50 border-2 border-gray-300 p-3 text-black focus:outline-none focus:border-black focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder-gray-400"
                 placeholder="Email"
                 required
@@ -257,6 +270,7 @@ const App: React.FC = () => {
             <label htmlFor="message" className="text-xs font-bold uppercase text-gray-500">Data_Packet</label>
             <textarea 
               id="message"
+              name="message"
               rows={5}
               className="w-full bg-gray-50 border-2 border-gray-300 p-3 text-black focus:outline-none focus:border-black focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder-gray-400"
               placeholder="Type your message..."
@@ -276,6 +290,8 @@ const App: React.FC = () => {
                <a 
                  key={link.platform} 
                  href={link.url} 
+                 target="_blank"
+                 rel="noreferrer"
                  className="flex flex-col items-center gap-2 text-gray-500 hover:text-black group"
                >
                  <div className="p-3 border-2 border-gray-200 rounded-full group-hover:border-black group-hover:bg-gray-50 transition-all">
