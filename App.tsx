@@ -7,16 +7,18 @@ import { RetroCard } from './components/RetroCard';
 import { RetroButton } from './components/RetroButton';
 import { RetroBackground } from './components/RetroBackground';
 import { StartupScreen } from './components/StartupScreen';
-import { Github, Linkedin, Twitter, Mail, ExternalLink, Download, ChevronRight, GraduationCap } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail, ExternalLink, Download, ChevronRight, GraduationCap, CheckCircle2 } from 'lucide-react';
 
 const App: React.FC = () => {
-  // Start with false to show loading screen first
   const [hasBooted, setHasBooted] = useState(false);
   const [currentSection, setCurrentSection] = useState<SectionType>(SectionType.HOME);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [data] = useState<PortfolioData>(PORTFOLIO_DATA);
+  
+  // Form submission states
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
-  // Scroll to top on section change
   useEffect(() => {
     if (hasBooted) {
       window.scrollTo(0, 0);
@@ -25,6 +27,43 @@ const App: React.FC = () => {
 
   const handleBootComplete = () => {
     setHasBooted(true);
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const formEndpoint = `https://formsubmit.co/ajax/f93fd4d20f092b35d6c4fc69e3bbfe51`;
+
+    try {
+      const response = await fetch(formEndpoint, {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setShowNotification(true);
+        // Reset form or handle success UI
+        (e.target as HTMLFormElement).reset();
+        
+        // Wait 3 seconds to show the notification, then redirect home
+        setTimeout(() => {
+          setShowNotification(false);
+          setCurrentSection(SectionType.HOME);
+        }, 3000);
+      } else {
+        alert("Transmission failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred during transmission.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderHome = () => (
@@ -99,13 +138,10 @@ const App: React.FC = () => {
       <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gray-300">
         {data.experience.map((exp, index) => (
           <div key={exp.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-            
-            {/* Timeline Dot */}
             <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-black bg-white group-hover:bg-black transition-colors shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
                <ChevronRight className="w-4 h-4 text-black group-hover:text-white" />
             </div>
             
-            {/* Card */}
             <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 border-2 border-black bg-white hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-2">
                 <h3 className="font-bold text-lg text-black">{exp.role}</h3>
@@ -220,26 +256,34 @@ const App: React.FC = () => {
   );
 
   const renderContact = () => (
-    <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
       <div className="flex items-center gap-4 mb-8">
         <h2 className="text-3xl font-bold text-black hover-glitch w-fit">OPEN_CHANNEL</h2>
         <div className="h-[2px] bg-black flex-grow"></div>
       </div>
 
-      <RetroCard className="p-8">
+      {showNotification && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[60] w-[90%] max-w-md animate-in zoom-in slide-in-from-top-4 duration-300">
+          <RetroCard title="SYSTEM_MESSAGE" className="bg-white border-black border-4 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+            <div className="flex items-center gap-4">
+              <CheckCircle2 className="text-green-600 w-10 h-10 shrink-0" />
+              <div>
+                <h4 className="font-bold text-lg leading-tight">TRANSMISSION SUCCESSFUL</h4>
+                <p className="text-sm text-gray-600 mt-1">Data packet received. Redirecting to root directory...</p>
+              </div>
+            </div>
+          </RetroCard>
+        </div>
+      )}
+
+      <RetroCard className={`p-8 transition-opacity duration-300 ${showNotification ? 'opacity-20 pointer-events-none' : 'opacity-100'}`}>
         <p className="text-gray-600 mb-8 text-center font-medium">
           Transmitting data to: <span className="text-black font-bold bg-gray-200 px-1">{data.personalInfo.email}</span>
         </p>
 
-        {/* Integration with FormSubmit.co */}
-        <form 
-          className="space-y-6" 
-          action={`https://formsubmit.co/${data.personalInfo.email}`} 
-          method="POST"
-        >
-          {/* FormSubmit Configuration */}
-          <input type="hidden" name="_subject" value={`New Portfolio Message from ${data.personalInfo.name}`} />
-          <input type="hidden" name="_template" value="table" />
+        <form className="space-y-6" onSubmit={handleFormSubmit}>
+          <input type="hidden" name="_subject" value={`Portfolio Comms from ${data.personalInfo.name}`} />
+          <input type="hidden" name="_captcha" value="false" />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
@@ -278,8 +322,8 @@ const App: React.FC = () => {
             ></textarea>
           </div>
 
-          <RetroButton type="submit" className="w-full">
-            Transmit Message
+          <RetroButton type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "TRANSMITTING..." : "Transmit Message"}
           </RetroButton>
         </form>
 
@@ -309,12 +353,6 @@ const App: React.FC = () => {
   return (
     <>
       {!hasBooted && <StartupScreen onComplete={handleBootComplete} />}
-      
-      {/* 
-         We keep the app structure rendered but hidden during boot if needed, 
-         or just render it after. Rendering after ensures animations start when visible. 
-         However, the zooming animation fades out the startup screen revealing what's behind it.
-      */}
       <div className={`min-h-screen bg-transparent text-black selection:bg-black selection:text-white font-mono transition-opacity duration-1000 ${hasBooted ? 'opacity-100' : 'opacity-0'}`}>
         <RetroBackground />
         <Navbar 
